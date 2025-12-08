@@ -37,7 +37,7 @@ def test_create_task_past_due_datetime():
     )
     assert response.status_code == 400
     data = response.json()
-    assert data["detail"] == "due_datetime must be in the future"
+    assert data["detail"] == "ERROR: due_datetime must be in the future"
 
 def test_create_task_missing_title():
     response = client.post(
