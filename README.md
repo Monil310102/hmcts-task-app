@@ -1,7 +1,7 @@
 # HMCTS Task Management System
 
 A simple task management system for HMCTS caseworkers.
-This project includes a **backend API** for task creation and a **frontend application** to interact with the API.
+This project includes a **backend API** for task creation and a **frontend React application** to interact with the API.
 
 ---
 
@@ -12,11 +12,11 @@ This project includes a **backend API** for task creation and a **frontend appli
 * [Tech Stack](#tech-stack)
 * [Setup and Installation](#setup-and-installation)
 * [Running the Backend API](#running-the-backend-api)
+* [Frontend Integration](#frontend-integration)
 * [API Endpoints](#api-endpoints)
 * [Validation](#validation)
 * [Testing](#testing)
 * [Folder Structure](#folder-structure)
-* [Frontend Integration](#frontend-integration)
 * [Contributing](#contributing)
 * [Future Enhancements](#future-enhancements)
 
@@ -34,50 +34,15 @@ Currently, **only task creation** is implemented as per the technical test requi
 
 Original task details can be found [here](https://github.com/hmcts/dts-developer-challenge-junior).
 
-# HMCTS Task Management System
-
-A simple task management system for HMCTS caseworkers.
-This project includes a **backend API** for task creation and a **frontend application** to interact with the API.
-
----
-
-## Table of Contents
-
-* [Project Overview](#project-overview)
-* [Features](#features)
-* [Tech Stack](#tech-stack)
-* [Setup and Installation](#setup-and-installation)
-* [Running the Backend API](#running-the-backend-api)
-* [API Endpoints](#api-endpoints)
-* [Validation](#validation)
-* [Testing](#testing)
-* [Folder Structure](#folder-structure)
-
----
-
-## Project Overview
-
-This project is a simple task management system where caseworkers can:
-
-* Create tasks
-* Validate task data before storing it
-* Store tasks in a database for later retrieval
-
-Currently, **only task creation** is implemented as per the technical test requirements.
-
 ---
 
 ## Features
 
-* Create tasks with fields:
-
-  * `title` (required)
-  * `description` (optional)
-  * `status` (`pending`, `inprogress`, `completed`, default: `pending`)
-  * `due_datetime` (must be in the future)
+* Create tasks via a backend API
 * Input validation using **Pydantic**
 * Database interactions with **SQLAlchemy**
 * Proper error handling for invalid inputs and database errors
+* Frontend **Task Form** with user input for task creation and success/error messages
 * Unit tests with **pytest**
 * Documentation via **Swagger UI**
 
@@ -91,6 +56,9 @@ Currently, **only task creation** is implemented as per the technical test requi
 * **SQLite** – Database (local development)
 * **Pydantic** – Data validation
 * **Uvicorn** – ASGI server
+* **React** – Frontend
+* **JavaScript** – Frontend scripting
+* **CSS** – Frontend styling
 
 ---
 
@@ -103,35 +71,35 @@ git clone <your-repo-url>
 cd hmcts-task-app
 ```
 
-2. **Create a virtual environment:**
+2. **Backend setup:**
 
 ```bash
+cd backend
 python -m venv myenv
-```
-
-3. **Activate the virtual environment:**
-
-```bash
-# Windows
+# Activate virtual environment
+# Windows:
 myenv\Scripts\activate
-# Mac/Linux
+# Mac/Linux:
 source myenv/bin/activate
+pip install -r requirements.txt
 ```
 
-4. **Install dependencies:**
+3. **Frontend setup:**
 
 ```bash
-pip install -r backend/requirements.txt
+cd ../frontend
+npm install
 ```
 
 ---
 
 ## Running the Backend API
 
-1. Navigate to the `backend/` folder:
+1. Navigate to the backend folder and activate virtual environment (if not already):
 
 ```bash
 cd backend
+# activate virtual environment again if needed
 ```
 
 2. Run the FastAPI server:
@@ -140,10 +108,27 @@ cd backend
 uvicorn app.main:app --reload
 ```
 
-3. Open the API documentation:
+The backend will run at: `http://127.0.0.1:8000`
 
-* Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-* ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+---
+
+## Frontend Integration
+
+1. Navigate to the frontend folder:
+
+```bash
+cd frontend
+```
+
+2. Start the React app:
+
+```bash
+npm start
+```
+
+The frontend will run at: `http://localhost:3000`
+
+3. Open your browser, access the frontend, and create a task using the form. You should see success/error messages with task details.
 
 ---
 
@@ -191,9 +176,9 @@ Validation logic is implemented in `backend/app/utils.py`.
 
 ## Testing
 
-Unit tests are implemented with **pytest**.
+### Backend
 
-To run tests:
+Run pytest to test backend functionality:
 
 ```bash
 cd backend
@@ -205,6 +190,12 @@ Tests include:
 * Successful task creation
 * Validation of future `due_datetime`
 * Response schema verification
+
+### Frontend
+
+* Fill out the form and verify tasks are created.
+* Ensure success/error messages display correctly.
+* Check browser console for any runtime errors.
 
 ---
 
@@ -227,7 +218,14 @@ hmcts-task-app/
 │   │   └── test_tasks.py
 │   └── requirements.txt
 │
-├── frontend/                # Frontend app (optional)
-├── myenv/                   # Virtual environment
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   └─ TaskForm.jsx
+│   │   │   └─ TaskForm.css
+│   │   ├─ api.js
+│   │   ├─ App.jsx
+│   │   ├─ index.js
+│
 └── README.md                # This file
 ```
