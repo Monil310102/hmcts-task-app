@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
-from backend.app.models import StatusOptions
+from enum import Enum
+
+class StatusOptions(str, Enum):
+    pending = "pending"
+    inprogress = "inprogress"
+    completed = "completed"
 
 #Create task request schema
 class CreateTask(BaseModel):
