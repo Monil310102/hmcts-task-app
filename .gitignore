@@ -1,3 +1,5 @@
 backend/venv/
 backend/app/__pycache__/
 test.db
+backend/tests/__pycache__/
+.pytest_cache/
