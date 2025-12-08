@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createTask } from "../api";
+import './TaskForm.css';
 
 export default function TaskForm() {
   const [title, setTitle] = useState("");
@@ -34,7 +35,7 @@ export default function TaskForm() {
   };
 
   return (
-    <div>
+    <div className="task-form-container">
       <h2>Create Task</h2>
       <form onSubmit={handleSubmit}>
         <div>
